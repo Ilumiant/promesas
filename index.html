@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <div id="texto" style="height: 60px; font-size: 2rem;"></div>
+    <button id="llamarFunciones">Llamar funciones</button>
+    <script>
+      function primero() {
+        let texto = document.getElementById("texto")
+        texto.innerHTML += "primero"
+      }
+      /*
+      function segundo() {
+        return new Promise(function (resolve, reject) {
+
+          let fallar = true
+
+          if (fallar) {
+            reject(1)
+          } else {
+            setTimeout(function () {
+              let texto = document.getElementById("texto")
+              texto.innerHTML += ", segundo"
+              resolve(1)
+            }, 1500)
+          }
+        })
+      }
+      */
+      function segundo() {
+        return new Promise(function (resolve, reject) {
+
+          let fallar = false
+
+          if (fallar) {
+            reject({
+              error: "No se encontró el dato"
+            })
+          } else {
+            setTimeout(function () {
+              resolve({
+                data: "segundo"
+              })
+            }, 5000)
+          }
+        })
+      }
+      function tercero() {
+        let texto = document.getElementById("texto")
+        texto.innerHTML += ", tercero"
+      }
+
+      document.getElementById("llamarFunciones").addEventListener("click", ejecutarFunciones)
+      
+      async function ejecutarFunciones() {
+        primero()
+        try {
+          let respuesta = await segundo()
+          let texto = document.getElementById("texto")
+          texto.innerHTML += ", " + respuesta.data
+        } catch (error) {
+          console.error(error)
+          let texto = document.getElementById("texto")
+          texto.innerHTML += ", FALLÓ"
+        }
+        tercero()
+      }
+
+      /*
+      function ejecutarFunciones() {
+        primero()
+        segundo()
+          .then(function (respuesta) {
+            let texto = document.getElementById("texto")
+            texto.innerHTML += ", " + respuesta.data
+            tercero()
+          })
+          .catch(function (error) {
+            console.error(error)
+            let texto = document.getElementById("texto")
+            texto.innerHTML += ", FALLÓ"
+            tercero()
+          })
+      }
+      */
+      
+      /*
+      async function ejecutarFunciones() {
+        primero()
+        try {
+          await segundo()
+        } catch (error) {
+          let texto = document.getElementById("texto")
+          texto.innerHTML += ", FALLÓ"
+        }
+        tercero()
+      }
+      */
+
+      /*
+      function ejecutarFunciones() {
+        primero()
+        segundo()
+          .then(function () {
+            tercero()
+          })
+          .catch(function () {
+            let texto = document.getElementById("texto")
+            texto.innerHTML += ", FALLÓ"
+            tercero()
+          })
+      }
+      */
+
+      /*
+      async function ejecutarFunciones() {
+        primero()
+        await segundo()
+        tercero()
+      }
+      */
+
+      /*
+      function ejecutarFunciones() {
+        primero()
+        segundo().then(function () {
+          tercero()
+        })
+      }
+      */
+      
+      
+      
+      
+
+      
+      /*
+      let contador = 0
+      setInterval(function () {
+        console.log(++contador);
+      }, 1000)
+
+      setTimeout(function () {
+        console.log(++contador);
+      }, 5000)
+      */
+    </script>
+</body>
+</html>
